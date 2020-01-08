@@ -6,14 +6,15 @@ import hashlib
 # Version 1.5	Simplified Command (md5r . 2 2 => md5r . )
 # Version 2.0	Added Recursive Mode + Logging Option
 # Version 2.1	Solved unicode problem!!!!
+# Version 2.2	Updating for python3 and some clean up 
 
 #=================================================
 def list_files(path):
 	files = []
-	for name in os.listdir(unicode(path)):
+	for name in os.listdir((path)):
 		if os.path.isfile(os.path.join(path, name)):
-			files.append(unicode(name))
-	
+			files.append((name))
+
 	return files
 
 #=================================================
@@ -33,7 +34,7 @@ def get_md5_current_level(path):
 	
 	for f in files_in_path:
 		newpath = path + "\\" + f
-		md5buf += hashlib.md5(open(newpath, 'rb').read()).hexdigest() + "\t" + newpath + "\n"
+		md5buf += hashlib.sha256(open(newpath, 'rb').read()).hexdigest() + "\t" + newpath + "\n"
 	
 	return md5buf
 
@@ -60,35 +61,37 @@ except:
 	
 md5buf = ''
 
-log_path = 'd:\\temp\\_md5list_'+input_mode+'.txt'
-fp = open(log_path, 'w')
+#log_path = '.\\_md5list_'+input_mode+'.txt'
+#fp = open(log_path, 'w')
 
-print "+================================================"
-print "| md5r (em-dee-fi-ver) "
-print "| Version 2.1 "
-print "| 2016.11.14 by hazel"
-print "+================================================"
-print "| Working Mode: %s " % input_mode
-print "+================================================"
+print ("+================================================"  )
+print ("| md5r (em-dee-fi-ver) "                            )
+print ("| Version 2.2 "                                     )
+print ("| 2020.01.08 by hazel"                              )
+print ("+================================================"  )
+print ("| Working Mode: %s " % input_mode                   )
+print ("+================================================"  )
 
 #=================================================
 if input_mode == 'x':
 	md5buf += get_md5_current_level(input_path)
-	print md5buf
+	print (md5buf)
 #=================================================	
 elif input_mode == 'r':
 	md5buf += recursive_dir_search(input_path)
-	print "| Open Log File: %s " % log_path
+	print ( md5buf )
+	#print ("| Open Log File: %s " % log_path)
 	
 #=================================================		
 else:
-	print "md5r [path] [mode]"
+	print ("md5r [path] [mode]")
 
 #=================================================		
 #
-print "+================================================"
-fp.write(md5buf.encode('utf8'))	
-fp.close()	
+print ("+================================================")
+#print (md5buf.encode('utf8'))
+#fp.write(md5buf.encode('utf8'))	
+#fp.close()	
 
-cmd = log_path
-os.system(cmd)
+#cmd = log_path
+#os.system(cmd)
