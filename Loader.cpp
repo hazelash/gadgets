@@ -6,8 +6,8 @@
 #include <Shlwapi.h>
 
 int numArgs = 0;
-int readOffset = 0;
-int executeOffset = 0;
+DWORD readOffset = 0;
+DWORD executeOffset = 0;
 
 BOOL toBeExecuted = false;
 
@@ -59,15 +59,15 @@ int checkNibble(BYTE b)
 	}
 }
 
-int parseOffset(LPWSTR str)
+DWORD parseOffset(LPWSTR str)
 {
 	int sLen = wcsnlen(str, 10);	// 8 for DWORD and 2 for switches (-e)
-	int nibble = 0;
-	int result = 0;
+	DWORD nibble = 0;
+	DWORD result = 0;
 
 	for (int i = 0; i < sLen - 2; i++)
 	{
-		nibble = checkNibble(str[sLen - 1 - i]);
+		nibble = checkNibble( (BYTE) str[sLen - 1 - i]);
 		if (nibble == -1)
 		{
 			printUsage();
@@ -79,7 +79,7 @@ int parseOffset(LPWSTR str)
 	return result;
 }
 
-BOOL parseCommandLine(LPWSTR *cmdlines)
+BOOL parseCommandLine(LPWSTR* cmdlines)
 {
 	if (numArgs == 2)
 	{
@@ -228,7 +228,7 @@ int main()
 	LPOVERLAPPED lpOverlapped = NULL;
 
 	// x64 and x86 builds
-	LPWSTR *cmdlines = CommandLineToArgvW(GetCommandLineW(), &numArgs);
+	LPWSTR* cmdlines = CommandLineToArgvW(GetCommandLineW(), &numArgs);
 	if (cmdlines == NULL)
 	{
 		wprintf(L"Error with GetCommandLine\n");
@@ -271,7 +271,7 @@ int main()
 		goto __FREE_NONE;
 	}
 
-	lpBuffer = (BYTE *)malloc(dwReadSize);
+	lpBuffer = (BYTE*)malloc(dwReadSize);
 	if (!lpBuffer)
 	{
 		wprintf(L"Error with malloc\n");
