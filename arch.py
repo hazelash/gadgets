@@ -21,10 +21,6 @@ for file in all_files:
 	f = open(newpath, 'rb')
 	buf = f.read(0x10)
 	
-	num_sections_delphi = 0
-	export_name_count = 0;
-	random_export_name_count = 0
-	
 	if ord(buf[0]) != 0x4d or ord(buf[1]) != 0x5a:
 		logbuf += ("not pe")
 		print logbuf
