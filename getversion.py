@@ -35,9 +35,7 @@ for file in all_files:
 
 	for i in  rsc.entries:
 		if ( i.id == 0x10): 
-			
 			for xx in i.directory.entries:
-				
 				for yy in xx.directory.entries:
 					version_struct = yy.data.struct
 					start_offset = pe.get_offset_from_rva(version_struct.OffsetToData)
@@ -81,13 +79,4 @@ for file in all_files:
 											#	buf += st_entry.entries['FileVersion'] + " | "
 											#except:
 											#	buf += "(nil)\t | "
-											# LegalCopyright Copyright (c)  AllAlex, Inc.  All rights reserved.
-											# InternalName VideoClone.exe
-											# FileVersion 2, 3, 0, 0
-											# CompanyName AllAlex, Inc / Applian Technnologies, Inc
-											# LegalTrademarks WM Capture,VideoClone
-											# ProductName VideoClone
-											# ProductVersion 2, 3, 0, 0
-											# FileDescription VideoClone - Screen Recorder
-											# OriginalFilename VideoClone.exe
 					print buf 
